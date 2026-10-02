@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Edward — Portfolio</title>
+  <meta name="description" content="Projects and code by Edward Robles-Rosa.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #e8ece8;
+      --ink: #19262f;
+      --muted: #55646d;
+      --line: #c3ccc6;
+      --signal: #2a55d8;
+      --row-hover: #dde3de;
+      --display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+      --body: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --paper: #121b21;
+        --ink: #e6ebe7;
+        --muted: #93a2aa;
+        --line: #2a3943;
+        --signal: #7c9bff;
+        --row-hover: #1a2830;
+      }
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--body);
+      font-size: 1.0625rem;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; }
+    a:focus-visible { outline: 3px solid var(--signal); outline-offset: 3px; border-radius: 2px; }
+
+    .wrap { max-width: 62rem; margin: 0 auto; padding: 0 1.5rem; }
+
+    /* Top bar */
+    .top { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 0; font-weight: 500; }
+    .top nav { display: flex; gap: 1.75rem; }
+    .top a { text-decoration: none; }
+    .top a:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+    /* Hero: the one loud thing on the page */
+    .hero { padding: clamp(3rem, 12vw, 8rem) 0 clamp(3rem, 8vw, 5.5rem); }
+    .hero h1 {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: clamp(4.5rem, 21vw, 15rem);
+      line-height: 0.82;
+      letter-spacing: -0.045em;
+      margin: 0 0 clamp(1.5rem, 4vw, 2.5rem) -0.04em;
+    }
+    .hero p { max-width: 34rem; margin: 0; font-size: 1.25rem; color: var(--muted); }
+    .hero p strong { color: var(--ink); font-weight: 600; }
+
+    /* Section headings */
+    h2 { font-family: var(--display); font-weight: 800; font-size: 1.75rem; letter-spacing: -0.02em; margin: 0 0 1.5rem; }
+    section { padding: 2.5rem 0 3.5rem; }
+
+    /* Project list */
+    .projects { border-top: 2px solid var(--ink); padding-top: 2rem; }
+    .repo-list { list-style: none; margin: 0; padding: 0; }
+    .repo-list li { border-bottom: 1px solid var(--line); }
+    .repo {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 0.25rem 2rem;
+      padding: 1.25rem 0.75rem;
+      margin: 0 -0.75rem;
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+    .repo:hover { background: var(--row-hover); }
+    .repo-name { font-family: var(--display); font-weight: 500; font-size: 1.5rem; letter-spacing: -0.01em; line-height: 1.2; }
+    .repo:hover .repo-name { color: var(--signal); }
+    .repo-desc { grid-column: 1; margin: 0; color: var(--muted); max-width: 40rem; }
+    .repo-meta { grid-column: 2; grid-row: 1 / span 2; align-self: center; display: flex; align-items: center; gap: 0.5rem; font-size: 0.95rem; color: var(--muted); white-space: nowrap; }
+    .dot { width: 0.7rem; height: 0.7rem; border-radius: 50%; background: var(--lang, var(--muted)); }
+    .more { margin-top: 1.5rem; }
+    .more a { font-weight: 600; text-underline-offset: 4px; }
+    .status { color: var(--muted); }
+
+    /* About + contact */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; border-top: 2px solid var(--ink); padding-top: 2rem; }
+    .two-col p { margin: 0 0 1rem; max-width: 34rem; }
+    .contact-list { list-style: none; margin: 0; padding: 0; }
+    .contact-list li { padding: 0.6rem 0; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; gap: 1rem; }
+    .contact-list span { color: var(--muted); }
+    .contact-list a { font-weight: 500; text-underline-offset: 4px; }
+
+    footer { padding: 2rem 0 3rem; color: var(--muted); font-size: 0.95rem; }
+
+    @media (max-width: 40rem) {
+      .two-col { grid-template-columns: 1fr; gap: 2rem; }
+      .repo { grid-template-columns: 1fr; }
+      .repo-meta { grid-column: 1; grid-row: auto; margin-top: 0.5rem; }
+      .top nav { gap: 1.25rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .repo { transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="top">
+      <a href="#top" aria-label="Edward Robles-Rosa, home">Edward Robles-Rosa</a>
+      <nav aria-label="Main">
+        <a href="#projects">Projects</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <div class="hero">
+        <h1>Edward</h1>
+        <!-- EDIT: one or two plain sentences about what you build and what you're looking for -->
+        <p><strong>I build stuff.</strong> This is a collection of my projects. Each one links to its code on GitHub.</p>
+      </div>
+
+      <section id="projects" class="projects" aria-labelledby="projects-title">
+        <h2 id="projects-title">Projects</h2>
+        <ul class="repo-list" id="repo-list"></ul>
+        <p class="more" id="more"></p>
+      </section>
+
+      <section id="about" aria-labelledby="about-title">
+        <div class="two-col">
+          <div>
+            <h2 id="about-title">About</h2>
+          </div>
+          <div>
+            <!-- EDIT: a short paragraph or two: what you study or do, what you enjoy building, what you're working on now -->
+            <p>I am an Honors Student and Hyman Science Scholar at Loyola University Maryland studying Computer Science. I enjoy building things with pratical applications to my personal life. The most recent example being a weather notification bot. I go into depth on my repo, but in short I enjoy being able to assess an issue or lack of something and try to build a script or a program that addresses that.</p>
+            <p>At the moment I am learning about software design and analysis while still sharpening my skills with the Linux terminal. I am looking for an opportunity to apply my techinal skills and knowledge in a real-world setting and to gain experience in my field of study.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" aria-labelledby="contact-title">
+        <div class="two-col">
+          <div>
+            <h2 id="contact-title">Contact</h2>
+          </div>
+          <ul class="contact-list">
+            <!-- EDIT: replace the links below -->
+            <li><span>Email</span><a href="mailto:edwardrobles1904@gmail.com">edwardrobles1904@gmail.com</a></li>
+            <li><span>GitHub</span><a href="https://github.com/edwardroblesrosa">github.com/edwardroblesrosa</a></li>
+            <li><span>LinkedIn</span><a href="https://www.edward-robles-rosa.com/in/">linkedin.com/in/edward-robles-rosa</a></li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <footer>© <span id="year"></span> Edward</footer>
+  </div>
+
+  <script>
+    /* ------------------------------------------------------------
+       1. EDIT THIS: your GitHub username.
+          If set, the page pulls your public repos automatically
+          (newest activity first, forks hidden).
+          Leave it as "" to use only the manual list below.
+    ------------------------------------------------------------ */
+    const GITHUB_USERNAME = "edwardrroblesrosa";
+
+    /* How many auto-loaded repos to show */
+    const MAX_AUTO_REPOS = 8;
+
+    /* ------------------------------------------------------------
+       2. EDIT THIS: repos you want to feature by hand.
+          These always appear first, in this order.
+          Fields: name, description, language, url
+    ------------------------------------------------------------ */
+    const FEATURED = [
+      {
+        name: "project-one",
+        description: "Weather notification bot, for when the weather app is not enough for you.",
+        language: "JavaScript",
+        url: "https://github.com/YOUR-USERNAME/project-one"
+      },
+      {
+        name: "project-two",
+        description: "One sentence on what this does and who it's for.",
+        language: "Python",
+        url: "https://github.com/YOUR-USERNAME/project-two"
+      },
+      {
+        name: "project-three",
+        description: "One sentence on what this does and who it's for.",
+        language: "HTML",
+        url: "https://github.com/YOUR-USERNAME/project-three"
+      }
+    ];
+
+    /* ---------------- Rendering (no need to edit below) ---------------- */
+    const LANG_COLORS = {
+      JavaScript: "#d4b106", TypeScript: "#3178c6", Python: "#3572a5", HTML: "#e34c26",
+      CSS: "#7a4fd1", Java: "#b07219", "C++": "#f34b7d", C: "#7d7d7d", "C#": "#178600",
+      Go: "#00add8", Rust: "#dea584", Ruby: "#cc342d", PHP: "#4f5d95", Swift: "#f05138",
+      Kotlin: "#a97bff", Shell: "#4eaa25", Jupyter: "#da5b0b", "Jupyter Notebook": "#da5b0b"
+    };
+
+    const list = document.getElementById("repo-list");
+    const more = document.getElementById("more");
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    function addRepo(repo) {
+      const li = document.createElement("li");
+      const a = document.createElement("a");
+      a.className = "repo";
+      a.href = repo.url;
+
+      const name = document.createElement("span");
+      name.className = "repo-name";
+      name.textContent = repo.name;
+
+      const desc = document.createElement("p");
+      desc.className = "repo-desc";
+      desc.textContent = repo.description || "No description yet.";
+
+      const meta = document.createElement("span");
+      meta.className = "repo-meta";
+      if (repo.language) {
+        const dot = document.createElement("span");
+        dot.className = "dot";
+        dot.style.setProperty("--lang", LANG_COLORS[repo.language] || "#7d7d7d");
+        meta.append(dot, document.createTextNode(repo.language));
+      }
+
+      a.append(name, desc, meta);
+      li.append(a);
+      list.append(li);
+    }
+
+    FEATURED.forEach(addRepo);
+
+    if (GITHUB_USERNAME) {
+      const featuredUrls = new Set(FEATURED.map(r => r.url.toLowerCase()));
+      fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100&sort=pushed`)
+        .then(res => { if (!res.ok) throw new Error(res.status); return res.json(); })
+        .then(repos => {
+          repos
+            .filter(r => !r.fork && r.name.toLowerCase() !== `${GITHUB_USERNAME.toLowerCase()}.github.io`)
+            .filter(r => !featuredUrls.has(r.html_url.toLowerCase()))
+            .slice(0, MAX_AUTO_REPOS)
+            .forEach(r => addRepo({
+              name: r.name,
+              description: r.description,
+              language: r.language,
+              url: r.html_url
+            }));
+          more.innerHTML = `<a href="https://github.com/${GITHUB_USERNAME}?tab=repositories">See all repositories on GitHub</a>`;
+        })
+        .catch(() => {
+          more.innerHTML = `<span class="status">Couldn't load the full repo list. </span><a href="https://github.com/${GITHUB_USERNAME}?tab=repositories">See all repositories on GitHub</a>`;
+        });
+    }
+  </script>
+</body>
+</html>
