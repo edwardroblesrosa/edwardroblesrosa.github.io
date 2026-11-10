@@ -129,7 +129,7 @@
       <div class="hero">
         <h1>Edward</h1>
         <!-- EDIT: one or two plain sentences about what you build and what you're looking for -->
-        <p><strong>I build stuff.</strong> This is a collection of my projects. Each one links to its code on GitHub.</p>
+        <p><strong>Computer science student at Loyola University Maryland.</strong> I build practical tools in Java and Python. Here are some of the projects I've worked on.</p>
       </div>
 
       <section id="projects" class="projects" aria-labelledby="projects-title">
@@ -145,8 +145,8 @@
           </div>
           <div>
             <!-- EDIT: a short paragraph or two: what you study or do, what you enjoy building, what you're working on now -->
-            <p>I am an Honors Student and Hyman Science Scholar at Loyola University Maryland studying Computer Science. I enjoy building things with pratical applications to my personal life. The most recent example being a weather notification bot. I go into depth on my repo, but in short I enjoy being able to assess an issue or lack of something and try to build a script or a program that addresses that.</p>
-            <p>At the moment I am learning about software design and analysis while still sharpening my skills with the Linux terminal. I am looking for an opportunity to apply my techinal skills and knowledge in a real-world setting and to gain experience in my field of study.</p>
+            <p>I am an Honors Student and Hyman Science Scholar at Loyola University Maryland studying Computer Science. I enjoy building things with practical applications to my personal life. My most recent example is a weather notification bot. I go into depth on my repo, but in short I enjoy being able to assess an issue or lack of something and try to build a script or a program that addresses that.</p>
+            <p>At the moment I am learning about software design and analysis while still sharpening my skills with the Linux terminal. I am looking for an opportunity to apply my technical skills and knowledge in a real-world setting and to gain experience in my field of study.</p>
           </div>
         </div>
       </section>
@@ -160,13 +160,13 @@
             <!-- EDIT: replace the links below -->
             <li><span>Email</span><a href="mailto:edwardrobles1904@gmail.com">edwardrobles1904@gmail.com</a></li>
             <li><span>GitHub</span><a href="https://github.com/edwardroblesrosa">github.com/edwardroblesrosa</a></li>
-            <li><span>LinkedIn</span><a href="https://www.edward-robles-rosa.com/in/">linkedin.com/in/edward-robles-rosa</a></li>
+            <li><span>LinkedIn</span><a href="https://www.linkedin.com/in/edward-robles-rosa-085038263/">linkedin.com/in/edward-robles-rosa</a></li>
           </ul>
         </div>
       </section>
     </main>
 
-    <footer>© <span id="year"></span> Edward</footer>
+    <footer>© <span id="year"></span> Edward Robles-Rosa</footer>
   </div>
 
   <script>
@@ -191,19 +191,25 @@
         name: "Weather Boy Bot",
         description: "Weather notification bot, for when the weather app is not enough for you.",
         language: "Python",
-        url: "https://github.com/YOUR-USERNAME/project-one"
+        url: "https://github.com/edwardrroblesrosa/Weather-Notification"
       },
       {
-        name: "project-two",
-        description: "One sentence on what this does and who it's for.",
+        name: "Hand-Tracking Drawing App",
+        description: "Python program that tracks hand gestures so users can draw on screen, choosing from three colors and controlling it with different gestures.",
         language: "Python",
-        url: "https://github.com/YOUR-USERNAME/project-two"
+        url: "https://github.com/edwardrroblesrosa/drawing-with-hand-tracking"
       },
       {
-        name: "project-three",
-        description: "One sentence on what this does and who it's for.",
-        language: "Python",
-        url: "https://github.com/YOUR-USERNAME/project-three"
+        name: "Polynomial Calculator & Performance Study",
+        description: "Java library that adds and multiplies polynomials. Benchmarked ArrayList vs. LinkedList under 1,000,000-operation stress tests (ArrayList was ~2.8x faster) and tracked down a hidden integer-overflow bug. Tested with JUnit.",
+        language: "Java",
+        url: ""
+      },
+      {
+        name: "Store Inventory Manager",
+        description: "Command-line inventory system for a media store, built from client requirements with an object-oriented class hierarchy for DVDs, CDs, books and audiobooks.",
+        language: "Java",
+        url: ""
       }
     ];
 
@@ -221,9 +227,10 @@
 
     function addRepo(repo) {
       const li = document.createElement("li");
-      const a = document.createElement("a");
+      // Projects without a public repo (e.g. class work) render as plain rows
+      const a = document.createElement(repo.url ? "a" : "div");
       a.className = "repo";
-      a.href = repo.url;
+      if (repo.url) a.href = repo.url;
 
       const name = document.createElement("span");
       name.className = "repo-name";
@@ -241,6 +248,7 @@
         dot.style.setProperty("--lang", LANG_COLORS[repo.language] || "#7d7d7d");
         meta.append(dot, document.createTextNode(repo.language));
       }
+      if (!repo.url) meta.append(document.createTextNode(" · Code on request"));
 
       a.append(name, desc, meta);
       li.append(a);
@@ -250,7 +258,7 @@
     FEATURED.forEach(addRepo);
 
     if (GITHUB_USERNAME) {
-      const featuredUrls = new Set(FEATURED.map(r => r.url.toLowerCase()));
+      const featuredUrls = new Set(FEATURED.filter(r => r.url).map(r => r.url.toLowerCase()));
       fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100&sort=pushed`)
         .then(res => { if (!res.ok) throw new Error(res.status); return res.json(); })
         .then(repos => {
